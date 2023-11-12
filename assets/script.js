@@ -13,11 +13,26 @@ async function getCityWeather(city) {
       console.error('Error fetching weather', error.message);
     }
   }
-  
-  // Update weather information
+
+
 function updateWeather(data) {
-
-  }
-    
   
-
+    const citySearchTermEl = $("#city-search-term");
+    const cityCurrentDateEl = $("#city-current-date");
+    const cityCurrentIconEl = $("#city-current-icon");
+    const tempInputEl = $("#temp-input");
+    const windInputEl = $("#wind-input");
+    const humidityInputEl = $("#humidity-input");
+  
+    citySearchTermEl.text(data.name);
+    cityCurrentDateEl.text(dayjs.unix(data.dt).format('MMM D, YYYY'));
+    const icon = $(`<img src='https://openweathermap.org/img/wn/${data.weather[0].icon}.png' alt='${data.weather[0].description}'/>`);
+    cityCurrentIconEl.empty().append(icon);
+    tempInputEl.text(`Temp: ${data.main.temp} °F`);
+    windInputEl.text(`Wind: ${data.wind.speed} MPH`);
+    humidityInputEl.text(`Humidity: ${data.main.humidity} %`);
+  
+    fiveDayForecast(data.coord.lat, data.coord.lon);
+  }
+  
+  
