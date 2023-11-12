@@ -3,25 +3,23 @@ const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast';
 
 async function getCityWeather(city, state = '') {
     try {
-        const locationQuery = state ? `${city},${state}` : city;
-        // const response = await fetch(`${apiUrl}?q=${locationQuery}&appid=${apiKey}`);
-        const response = await fetch(`${apiUrl}?q=${city}&appid=${apiKey}&units=imperial`);
+        const url = state ? `${apiUrl}?q=${city},${state}&appid=${apiKey}&units=imperial` : `${apiUrl}?q=${city}&appid=${apiKey}&units=imperial`;
+        const response = await fetch(url);
 
-        
         if (!response.ok) {
             throw new Error('Error fetching weather data: ' + response.statusText);
         }
-        
+
         const data = await response.json();
-        
+
         if (!data || !data.city || !data.city.name) {
             throw new Error('Invalid data received from the API');
         }
-        
-        return data; 
+
+        return data;
     } catch (error) {
         console.error('Error fetching city weather:', error.message);
-        throw error; 
+        throw error;
     }
 }
 
@@ -77,30 +75,54 @@ async function fiveDayForecast(lat, lon) {
     }
 }
 
-$("#user-form").on("submit", async function (e) {
-    e.preventDefault();
-    const cityInput = $("#city-input").val();
-    const stateInput = $("#state-input").val();
+// $("#user-form").on("submit", async function (e) {
+//     e.preventDefault();
+//     const cityInput = $("#city-input").val();
+//     const stateInput = $("#state-input").val();
 
-    try {
-        const weatherDataWithState = await getCityWeather(cityInput, stateInput);
-        console.log(weatherDataWithState);
+//     try {
+//         const weatherDataWithState = await getCityWeather(cityInput, stateInput);
+//         console.log(weatherDataWithState);
 
-        const weatherDataWithoutState = await getCityWeather(cityInput);
-        console.log(weatherDataWithoutState);
+//         const weatherDataWithoutState = await getCityWeather(cityInput);
+//         console.log(weatherDataWithoutState);
 
-        updateWeather(weatherDataWithoutState);
+//         updateWeather(weatherDataWithoutState);
 
-        const searchHistoryData = JSON.parse(localStorage.getItem('searchHistoryData')) || [];
-        if (!searchHistoryData.includes(cityInput)) {
-            searchHistoryData.push(cityInput);
-            localStorage.setItem('searchHistoryData', JSON.stringify(searchHistoryData));
-            displayCity();
-        }
-    } catch (error) {
-        console.error('An error occurred:', error.message);
-    }
-});
+//         const searchHistoryData = JSON.parse(localStorage.getItem('searchHistoryData')) || [];
+//         if (!searchHistoryData.includes(cityInput)) {
+//             searchHistoryData.push(cityInput);
+//             localStorage.setItem('searchHistoryData', JSON.stringify(searchHistoryData));
+//             displayCity();
+//         }
+//     } catch (error) {
+//         console.error('An error occurred:', error.message);
+//     }
+// });
+
+
+
+// $("#user-form").on("submit", async function (e) {
+//     e.preventDefault();
+//     const cityInput = $("#city-input").val();
+//     const stateInput = $("#state-input").val();
+
+//     try {
+//         const weatherDataWithState = await getCityWeather(cityInput, stateInput);
+//         console.log('Weather data with state:', weatherDataWithState);
+
+//         const weatherDataWithoutState = await getCityWeather(cityInput);
+//         console.log('Weather data without state:', weatherDataWithoutState);
+
+//         updateWeather(weatherDataWithoutState);
+
+//         const searchHistoryData = JSON.parse(localStorage.getItem('searchHistoryData')) || [];
+//         console.log('Search history data before update:', searchHistoryData);
+
+//     } catch (error) {
+//         console.error('An error occurred:', error.message);
+//     }
+// });
 
 
 function retreiveCity() {
@@ -108,18 +130,68 @@ function retreiveCity() {
     return cities ? JSON.parse(cities) : [];
 }
 
+// function displayCity() {
+//     const cityListEl = $("#cityList");
+//     cityListEl.empty();
+
+//     retreiveCity().forEach(city => {
+//         const eachCityEl = $(`
+//         <button class='col-12 btn btn-secondary' onclick="getCityWeather('${city}')">
+//           ${city}
+//         </button>
+//       `);
+//         cityListEl.append(eachCityEl);
+//     });
+// }
+
 function displayCity() {
-    const cityListEl = $("#cityList");
+    const cities = retreiveCity();
+    console.log('Cities retrieved from localStorage:', cities);
+
+    const cityListEl = $("#search-container");
     cityListEl.empty();
 
-    retreiveCity().forEach(city => {
+    cities.forEach(city => {
+        const listItemEl = $('<li class="list-group-item"></li>');
         const eachCityEl = $(`
-        <button class='col-12 btn btn-secondary' onclick="getCityWeather('${city}')">
-          ${city}
-        </button>
-      `);
-        cityListEl.append(eachCityEl);
+            <button class='btn btn-secondary w-100' onclick="getCityWeather('${city}')">
+                ${city}
+            </button>
+        `);
+        listItemEl.append(eachCityEl);
+        cityListEl.append(listItemEl);
     });
 }
+
+$("#user-form").on("submit", async function (e) {
+    e.preventDefault();
+    console.log('Form submitted!');
+
+    const cityInput = $("#city-input").val();
+    const stateInput = $("#state-input").val();
+
+    try {
+        const weatherDataWithState = await getCityWeather(cityInput, stateInput);
+        console.log('Weather data with state:', weatherDataWithState);
+
+        const weatherDataWithoutState = await getCityWeather(cityInput);
+        console.log('Weather data without state:', weatherDataWithoutState);
+
+        updateWeather(weatherDataWithoutState);
+
+        const searchHistoryData = JSON.parse(localStorage.getItem('searchHistoryData')) || [];
+        console.log('Search history data before update:', searchHistoryData);
+
+        if (!searchHistoryData.includes(cityInput)) {
+            searchHistoryData.push(cityInput);
+            localStorage.setItem('searchHistoryData', JSON.stringify(searchHistoryData));
+            console.log('Search history data after update:', searchHistoryData);
+
+            displayCity();
+        }
+    } catch (error) {
+        console.error('An error occurred:', error.message);
+    }
+});
 
 displayCity();
