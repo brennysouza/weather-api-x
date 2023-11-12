@@ -54,23 +54,24 @@ async function fiveDayForecast(lat, lon) {
         const currentDayDate = dayjs();
         const filteredDayDate = fiveDayView.list.filter(el => !currentDayDate.startOf("day").isSame(dayjs.unix(el.dt).startOf("day"), "day"));
 
-        const fiveDayBoxEl = $("#fiveDayBox");
-        fiveDayBoxEl.empty();
+        const fiveDayBoxEl = $("#forecast-cards");
+        fiveDayBoxEl.empty(); // Clear the existing forecast cards
 
-        const forecastContainer = $("#forecast-container");
-        forecastContainer.empty();
-    
         for (let i = 0; i < filteredDayDate.length; i += 8) {
             const forecastCard = $(`
-                <div class="col-xl col-lg col-md col-sm-12 col-xs-12 col-12 card">
-                    <h4>${dayjs.unix(filteredDayDate[i].dt).format('MMM D, YYYY')}</h4>
-                    <img src='https://openweathermap.org/img/wn/${filteredDayDate[i].weather[0].icon}.png' alt='${filteredDayDate[i].weather[0].description}'/>
-                    <div>Temp: ${filteredDayDate[i].main.temp} °F </div>
-                    <div>Wind: ${filteredDayDate[i].wind.speed} MPH </div>
-                    <div>Humidity: ${filteredDayDate[i].main.humidity} % </div>
+                <div class="col-lg-2">
+                    <div class="card" style="height: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">${dayjs.unix(filteredDayDate[i].dt).format('MMM D, YYYY')}</h5>
+                            <img src='https://openweathermap.org/img/wn/${filteredDayDate[i].weather[0].icon}.png' alt='${filteredDayDate[i].weather[0].description}'/>
+                            <p class="card-text">Temp: ${filteredDayDate[i].main.temp} °F</p>
+                            <p class="card-text">Wind: ${filteredDayDate[i].wind.speed} MPH</p>
+                            <p class="card-text">Humidity: ${filteredDayDate[i].main.humidity} %</p>
+                        </div>
+                    </div>
                 </div>
             `);
-            forecastContainer.append(forecastCard);
+            fiveDayBoxEl.append(forecastCard);
         }
     } catch (error) {
         console.error('Error fetching five-day forecast:', error.message);
