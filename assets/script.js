@@ -130,9 +130,12 @@ async function fiveDayForecast(lat, lon) {
 
 
 function retreiveCity() {
-    const cities = localStorage.getItem("cities");
+    const cities = localStorage.getItem('searchHistoryData');
     return cities ? JSON.parse(cities) : [];
 }
+
+// localStorage.setItem('searchHistoryData', JSON.stringify(searchHistoryData));
+
 
 // function displayCity() {
 //     const cityListEl = $("#cityList");
