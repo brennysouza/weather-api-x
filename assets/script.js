@@ -14,6 +14,10 @@ async function getCityWeather(city) {
     }
   }
   
+  // Update weather information
+function updateWeather(data) {
 
+  }
+    
   
 
