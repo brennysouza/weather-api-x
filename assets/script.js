@@ -1,2 +1,16 @@
-const secretApiKey = 'YOUR_API_KEY';
-const weatherApiUrl = 'https://api.openweathermap.org/data/2.5/forecast';
+const secretApiKey = process.env.OPENWEATHERMAP_API_KEY;
+const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast';
+
+async function getWeather(city) {
+
+}
+
+function updateWeather(data) {
+}
+
+function updateUI(data) {
+}
+
+function init() {
+}
+
