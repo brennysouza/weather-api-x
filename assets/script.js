@@ -57,17 +57,20 @@ async function fiveDayForecast(lat, lon) {
         const fiveDayBoxEl = $("#fiveDayBox");
         fiveDayBoxEl.empty();
 
+        const forecastContainer = $("#forecast-container");
+        forecastContainer.empty();
+    
         for (let i = 0; i < filteredDayDate.length; i += 8) {
             const forecastCard = $(`
-            <div class="col-xl col-lg col-md col-sm-12 col-xs-12 col-12 card">
-              <h4>${dayjs.unix(filteredDayDate[i].dt).format('MMM D, YYYY')}</h4>
-              <img src='https://openweathermap.org/img/wn/${filteredDayDate[i].weather[0].icon}.png' alt='${filteredDayDate[i].weather[0].description}'/>
-              <div>Temp: ${filteredDayDate[i].main.temp} °F </div>
-              <div>Wind: ${filteredDayDate[i].wind.speed} MPH </div>
-              <div>Humidity: ${filteredDayDate[i].main.humidity} % </div>
-            </div>
-          `);
-            fiveDayBoxEl.append(forecastCard);
+                <div class="col-xl col-lg col-md col-sm-12 col-xs-12 col-12 card">
+                    <h4>${dayjs.unix(filteredDayDate[i].dt).format('MMM D, YYYY')}</h4>
+                    <img src='https://openweathermap.org/img/wn/${filteredDayDate[i].weather[0].icon}.png' alt='${filteredDayDate[i].weather[0].description}'/>
+                    <div>Temp: ${filteredDayDate[i].main.temp} °F </div>
+                    <div>Wind: ${filteredDayDate[i].wind.speed} MPH </div>
+                    <div>Humidity: ${filteredDayDate[i].main.humidity} % </div>
+                </div>
+            `);
+            forecastContainer.append(forecastCard);
         }
     } catch (error) {
         console.error('Error fetching five-day forecast:', error.message);
