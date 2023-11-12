@@ -35,4 +35,33 @@ function updateWeather(data) {
     fiveDayForecast(data.coord.lat, data.coord.lon);
   }
   
-  
+async function fiveDayForecast(lat, lon) {
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const fiveDayView = await response.json();
+    
+        const currentDayDate = dayjs();
+        const filteredDayDate = fiveDayView.list.filter(el => !currentDayDate.startOf("day").isSame(dayjs.unix(el.dt).startOf("day"), "day"));
+    
+        const fiveDayBoxEl = $("#fiveDayBox");
+        fiveDayBoxEl.empty();
+    
+        for (let i = 0; i < filteredDays.length; i += 8) {
+          const forecastCard = $(`
+            <div class="col-xl col-lg col-md col-sm-12 col-xs-12 col-12 card">
+              <h4>${dayjs.unix(filteredDayDate[i].dt).format('MMM D, YYYY')}</h4>
+              <img src='https://openweathermap.org/img/wn/${filteredDayDate[i].weather[0].icon}.png' alt='${filteredDayDate[i].weather[0].description}'/>
+              <div>Temp: ${filteredDayDate[i].main.temp} °F </div>
+              <div>Wind: ${filteredDayDate[i].wind.speed} MPH </div>
+              <div>Humidity: ${filteredDayDate[i].main.humidity} % </div>
+            </div>
+          `);
+          fiveDayBoxEl.append(forecastCard);
+        }
+      } catch (error) {
+        console.error('Error fetching five-day forecast:', error.message);
+      }
+  }
