@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "@popperjs/core": "^2.10.2",
+    "bootstrap": "^5.3.2",
+    "jquery": "^3.6.0"
+  },
+  "name": "weather-api-x",
+  "description": "A weather dashboard that runs in the browser and features dynamically updated HTML and CSS.  It uses the 5 Day Weather ForecastLinks to retrieve weather data for cities.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
