@@ -10,76 +10,59 @@
     <link rel="stylesheet" href="./assets/style.css">
 
     <title>The Weather Dashboard</title>
-  </head>
-  
+</head>
 
 <body>
-  <div class="container mt-5">
-    <h1 class="mb-4">The Weather Dashboard</h1>
+    <div class="container mt-5">
+        <h1 class="mb-4 text-primary">The Weather Dashboard</h1>
 
-    <div class="row">
-      <div class="col-4">
-        <div class="card bg-light">
-          <h3 class="search">Enter a city:</h3>
-          <form id="user-form" class="card-body">
-            <label class="form-label" for="city"></label>
-            <input name="city-input" size="30" id="city-input" type="text" autofocus="true" class="form-input" />
-            <button type="submit" class="btn btn-md">Search</button>
-          </form>
-          <ul class="list-group" id="search-container"></ul>
-        </div>
-      </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card bg-light">
+                    <h3 class="search bg-info text-white p-3">Enter a city:</h3>
+                    <form id="user-form" class="card-body">
+                        <label class="form-label visually-hidden" for="city">City:</label>
+                        <div class="input-group mb-3">
+                            <input name="city-input" id="city-input" type="text" class="form-control" placeholder="City" autofocus>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                    <ul class="list-group" id="search-container"></ul>
+                </div>
+            </div>
 
-      <div class="col-8">
-        <div class="card bg-white">
-          <div class="current-weather">
-            <!-- Search for a city to view weather -->
-            <h2 class="subtitle"><span id="city-search-term"></span>
-              <span id="city-current-date"></span>
-              <img id="city-current-icon"></img>
-            </h2>
-            <div id="city-container" class="list-group"></div>
-          </div>
+            <div class="col-md-8">
+                <div class="card bg-white">
+                    <div class="current-weather p-3 bg-success text-white">
+                        <h2 class="subtitle">
+                            <span id="city-search-term"></span>
+                            <span id="city-current-date"></span>
+                        </h2>
+                        <div id="city-container" class="list-group"></div>
+                    </div>
 
-          <div class="weather-input">
-            <p class="temp">Temp:
-              <span id="temp-input"></span></p>
-            <p class="humidity">Humidity:
-              <span id="humidity-input"></span></p>
-            <p class="wind">Wind Speed MPH:
-              <span id="wind-input"></span></p>
-          </div>
-        </div>
+                    <div class="weather-input p-3 bg-warning">
+                        <p class="temp">Temp: <span id="temp-input"></span></p>
+                        <p class="humidity">Humidity: <span id="humidity-input"></span></p>
+                        <p class="wind">Wind Speed MPH: <span id="wind-input"></span></p>
+                    </div>
+                </div>
 
-        <div class="row mt-4">
-            <h3 class="forecast-header">5-Day Forecast:</h3>
-            <div class="col-12 d-flex" id="forecast-cards">
-                <!-- Forecast cards will go here -->
+                <div class="row mt-4">
+                    <h3 class="forecast-header bg-info text-white p-3">5-Day Forecast:</h3>
+                    <div class="col-12 d-flex" id="forecast-cards">
+                        <!-- Forecast cards will go here -->
+                    </div>
+                </div>
             </div>
         </div>
-        
-
-        <!-- <div class="row" id="forecast-cards">
-          <div class="card col-2 text-white" id="day-1">
-            <p class="card-1" id="date-0">Date</p>
-            <img id="city-icon-1"></img>
-            <p class="card-1" id="temp-0">Temp:</p>
-            <p class="card-1" id="temp-0">Wind:</p>
-            <p class="card-1" id="humidity-0">Humidity:</p>
-          </div> -->
-
-
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"></script>
-  <script src="./assets/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"></script>
+    <script src="./assets/script.js"></script>
 </body>
 
 </html>
