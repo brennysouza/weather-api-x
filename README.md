@@ -21,7 +21,7 @@ No specific installation steps are required. Simply open the project in your web
 ## Links
 [Github Repo](https://github.com/brennysouza/weather-api-x)
 
-[Deployed Site]()
+[Deployed Site](https://brennysouza.github.io/weather-api-x/)
 
 [Link to video walkthrough](https://drive.google.com/file/d/1mjf1FoTywyZM7HFKhMRnl74kxZmB8DCm/view)
 
