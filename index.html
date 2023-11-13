@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,18 +13,23 @@
     <title>The Weather Dashboard</title>
 </head>
 
+
 <body>
     <div class="container mt-5">
+        <!-- Main app title -->
         <h1 class="mb-4 text-primary">The Weather Dashboard</h1>
 
         <div class="row">
             <div class="col-md-4">
                 <div class="card bg-light">
+                    <!-- Search bar input field -->
                     <h3 class="search bg-info text-white p-3">Enter a city:</h3>
                     <form id="user-form" class="card-body">
+                        <!-- Preset word shown in search input box so users know what to type in -->
                         <label class="form-label visually-hidden" for="city">City:</label>
                         <div class="input-group mb-3">
                             <input name="city-input" id="city-input" type="text" class="form-control" placeholder="City" autofocus>
+                            <!-- Functional button -->
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
                     </form>
@@ -41,6 +47,7 @@
                         <div id="city-container" class="list-group"></div>
                     </div>
 
+                    <!-- This is the main area that shows the weather for the current day in the larger container at the top -->
                     <div class="weather-input p-3 bg-warning">
                         <p class="temp">Temp: <span id="temp-input"></span></p>
                         <p class="humidity">Humidity: <span id="humidity-input"></span></p>
@@ -48,6 +55,7 @@
                     </div>
                 </div>
 
+                <!-- This code below is for the five day forecast for that search city displayed below the main current day weather container -->
                 <div class="row mt-4">
                     <h3 class="forecast-header bg-info text-white p-3">5-Day Forecast:</h3>
                     <div class="col-12 d-flex" id="forecast-cards">
@@ -58,6 +66,7 @@
         </div>
     </div>
 
+    <!-- bootstrap linksand api links -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
