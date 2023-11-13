@@ -79,94 +79,46 @@ async function fiveDayForecast(lat, lon) {
     }
 }
 
-// $("#user-form").on("submit", async function (e) {
-//     e.preventDefault();
-//     const cityInput = $("#city-input").val();
-//     const stateInput = $("#state-input").val();
-
-//     try {
-//         const weatherDataWithState = await getCityWeather(cityInput, stateInput);
-//         console.log(weatherDataWithState);
-
-//         const weatherDataWithoutState = await getCityWeather(cityInput);
-//         console.log(weatherDataWithoutState);
-
-//         updateWeather(weatherDataWithoutState);
-
-//         const searchHistoryData = JSON.parse(localStorage.getItem('searchHistoryData')) || [];
-//         if (!searchHistoryData.includes(cityInput)) {
-//             searchHistoryData.push(cityInput);
-//             localStorage.setItem('searchHistoryData', JSON.stringify(searchHistoryData));
-//             displayCity();
-//         }
-//     } catch (error) {
-//         console.error('An error occurred:', error.message);
-//     }
-// });
-
-
-
-// $("#user-form").on("submit", async function (e) {
-//     e.preventDefault();
-//     const cityInput = $("#city-input").val();
-//     const stateInput = $("#state-input").val();
-
-//     try {
-//         const weatherDataWithState = await getCityWeather(cityInput, stateInput);
-//         console.log('Weather data with state:', weatherDataWithState);
-
-//         const weatherDataWithoutState = await getCityWeather(cityInput);
-//         console.log('Weather data without state:', weatherDataWithoutState);
-
-//         updateWeather(weatherDataWithoutState);
-
-//         const searchHistoryData = JSON.parse(localStorage.getItem('searchHistoryData')) || [];
-//         console.log('Search history data before update:', searchHistoryData);
-
-//     } catch (error) {
-//         console.error('An error occurred:', error.message);
-//     }
-// });
-
 
 function retreiveCity() {
     const cities = localStorage.getItem('searchHistoryData');
     return cities ? JSON.parse(cities) : [];
 }
 
-// localStorage.setItem('searchHistoryData', JSON.stringify(searchHistoryData));
+$(document).ready(function () {
+    const cityListEl = $("#search-container");
 
-
-// function displayCity() {
-//     const cityListEl = $("#cityList");
-//     cityListEl.empty();
-
-//     retreiveCity().forEach(city => {
-//         const eachCityEl = $(`
-//         <button class='col-12 btn btn-secondary' onclick="getCityWeather('${city}')">
-//           ${city}
-//         </button>
-//       `);
-//         cityListEl.append(eachCityEl);
-//     });
-// }
+    async function displayCityWeather(city) {
+        try {
+            const weatherData = await getCityWeather(city);
+            updateWeather(weatherData);
+            fiveDayForecast(weatherData.city.coord.lat, weatherData.city.coord.lon);
+        } catch (error) {
+            console.error('An error occurred while fetching city weather:', error.message);
+        }
+    }
 
 function displayCity() {
     const cities = retreiveCity();
     console.log('Cities retrieved from localStorage:', cities);
 
-    const cityListEl = $("#search-container");
     cityListEl.empty();
 
     cities.forEach(city => {
         const listItemEl = $('<li class="list-group-item"></li>');
         const eachCityEl = $(`
-            <button class='btn btn-secondary w-100' onclick="getCityWeather('${city}')">
+            <button class='btn btn-secondary w-100' data-city="${city}">
                 ${city}
             </button>
         `);
         listItemEl.append(eachCityEl);
         cityListEl.append(listItemEl);
+    });
+
+    // Attach a click event listener to each button
+    cityListEl.on('click', 'button', function () {
+        const selectedCity = $(this).data('city');
+        displayCityWeather(selectedCity);
     });
 }
 
@@ -202,3 +154,4 @@ $("#user-form").on("submit", async function (e) {
 });
 
 displayCity();
+});
